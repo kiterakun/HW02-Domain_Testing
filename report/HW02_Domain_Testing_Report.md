@@ -2,11 +2,6 @@
 
 ## Báo cáo áp dụng Domain Testing và Boundary Value Analysis
 
-> **Trạng thái tài liệu:** Sườn báo cáo để hoàn thiện. Các phần trong
-> dấu `[ ... ]` cần được thay bằng thông tin và kết quả thực tế. Không
-> điền trước kết quả kiểm thử, lỗi, ảnh minh chứng hoặc số liệu khi chưa
-> thực hiện.
-
 ---
 
 ## Thông tin báo cáo
@@ -15,19 +10,12 @@ Mục Thông tin
 
 ---
 
-Học phần \[Tên học phần\]
+Học phần : Software Testing
 Bài tập HW02 -- Domain Testing on EShop
-Sinh viên \[Họ và tên\]
-Mã số sinh viên \[MSSV\]
-Nhóm \[Tên/số nhóm\]
-SUT EShop -- ứng dụng thương mại điện tử demo
-Repository SUT https://github.com/ttbhanh/eshop-sut
+Sinh viên : Phạm Vương Quân
+Mã số sinh viên : 23120341
 
 ## Các feature được lựa chọn
-
----
-
-Feature Pool theo đề bài Phạm vi kiểm thử dự kiến
 
 ---
 
@@ -55,11 +43,8 @@ FR-07: Shopping cart Pool D Kiểm thử giỏ hàng trên (Mobile) ứng dụng
     - [1.2.2. FR-09 -- Discount coupons](#122-fr-09----discount-coupons)
     - [1.2.3. FR-14 -- Category management (CRUD)](#123-fr-14----category-management-crud)
     - [1.2.4. FR-07 -- Shopping cart (Mobile)](#124-fr-07----shopping-cart-mobile)
-  - [1.3. Môi trường và công cụ](#13-môi-trường-và-công-cụ)
-  - [1.4. Quy trình Domain Testing](#14-quy-trình-domain-testing)
-  - [1.5. Quy trình Boundary Value Analysis (3 điểm)](#15-quy-trình-boundary-value-analysis-3-điểm)
-  - [1.6. Quy trình thực thi và quản lý bằng chứng](#16-quy-trình-thực-thi-và-quản-lý-bằng-chứng)
-  - [1.7. Quy ước trạng thái kiểm thử](#17-quy-ước-trạng-thái-kiểm-thử)
+  - [1.3. Quy trình Domain Testing](#13-quy-trình-domain-testing)
+  - [1.4. Quy trình Boundary Value Analysis (3 điểm)](#14-quy-trình-boundary-value-analysis-3-điểm)
 - [2. Thiết kế và thực thi kiểm thử](#2-thiết-kế-và-thực-thi-kiểm-thử)
   - [2.1. FR-03 -- Forgot password and password reset](#21-fr-03----forgot-password-and-password-reset)
     - [2.1.1. Mô tả chức năng và yêu cầu](#211-mô-tả-chức-năng-và-yêu-cầu)
@@ -67,7 +52,7 @@ FR-07: Shopping cart Pool D Kiểm thử giỏ hàng trên (Mobile) ứng dụng
     - [2.1.3. Test case Domain Testing](#213-test-case-domain-testing)
     - [2.1.4. BVA -- phân tích biên](#214-bva----phân-tích-biên)
     - [2.1.5. Test case BVA](#215-test-case-bva)
-    - [2.1.6. Kết quả thực thi và bằng chứng](#216-kết-quả-thực-thi-và-bằng-chứng)
+    - [2.1.6. Kết quả thực thi](#216-kết-quả-thực-thi)
     - [2.1.7. Đánh giá feature](#217-đánh-giá-feature)
   - [2.2. FR-09 -- Discount coupons](#22-fr-09----discount-coupons)
     - [2.2.1. Mô tả chức năng và yêu cầu](#221-mô-tả-chức-năng-và-yêu-cầu)
@@ -75,7 +60,7 @@ FR-07: Shopping cart Pool D Kiểm thử giỏ hàng trên (Mobile) ứng dụng
     - [2.2.3. Test case Domain Testing](#223-test-case-domain-testing)
     - [2.2.4. BVA -- phân tích biên](#224-bva----phân-tích-biên)
     - [2.2.5. Test case BVA](#225-test-case-bva)
-    - [2.2.6. Kết quả thực thi và bằng chứng](#226-kết-quả-thực-thi-và-bằng-chứng)
+    - [2.2.6. Kết quả thực thi](#226-kết-quả-thực-thi)
     - [2.2.7. Đánh giá feature](#227-đánh-giá-feature)
   - [2.3. FR-14 -- Category management (CRUD)](#23-fr-14----category-management-crud)
     - [2.3.1. Mô tả chức năng và yêu cầu](#231-mô-tả-chức-năng-và-yêu-cầu)
@@ -83,7 +68,7 @@ FR-07: Shopping cart Pool D Kiểm thử giỏ hàng trên (Mobile) ứng dụng
     - [2.3.3. Test case Domain Testing](#233-test-case-domain-testing)
     - [2.3.4. BVA -- phân tích biên](#234-bva----phân-tích-biên)
     - [2.3.5. Test case BVA](#235-test-case-bva)
-    - [2.3.6. Kết quả thực thi và bằng chứng](#236-kết-quả-thực-thi-và-bằng-chứng)
+    - [2.3.6. Kết quả thực thi](#236-kết-quả-thực-thi)
     - [2.3.7. Đánh giá feature](#237-đánh-giá-feature)
   - [2.4. FR-07 -- Shopping cart (Mobile)](#24-fr-07----shopping-cart-mobile)
     - [2.4.1. Mô tả chức năng và yêu cầu](#241-mô-tả-chức-năng-và-yêu-cầu)
@@ -91,45 +76,15 @@ FR-07: Shopping cart Pool D Kiểm thử giỏ hàng trên (Mobile) ứng dụng
     - [2.4.3. Test case Domain Testing](#243-test-case-domain-testing)
     - [2.4.4. BVA -- phân tích biên](#244-bva----phân-tích-biên)
     - [2.4.5. Test case BVA](#245-test-case-bva)
-    - [2.4.6. Kết quả thực thi và bằng chứng](#246-kết-quả-thực-thi-và-bằng-chứng)
+    - [2.4.6. Kết quả thực thi](#246-kết-quả-thực-thi)
     - [2.4.7. Đánh giá feature](#247-đánh-giá-feature)
   - [2.5. Tổng hợp kết quả kiểm thử bốn feature](#25-tổng-hợp-kết-quả-kiểm-thử-bốn-feature)
-- [3. Báo cáo lỗi (Bug Report)](#3-báo-cáo-lỗi-bug-report)
-  - [3.1. Quy trình phát hiện và xác nhận lỗi](#31-quy-trình-phát-hiện-và-xác-nhận-lỗi)
-  - [3.2. Danh sách lỗi tổng hợp](#32-danh-sách-lỗi-tổng-hợp)
-  - [3.3. Chi tiết từng lỗi](#33-chi-tiết-từng-lỗi)
-    - [BUG-\[ID\]: \[Tiêu đề ngắn, mô tả đúng hiện tượng\]](#bug-id-tiêu-đề-ngắn-mô-tả-đúng-hiện-tượng)
-  - [3.4. Tổng kết lỗi](#34-tổng-kết-lỗi)
-- [4. AI Gap Analysis and Evaluation](#4-ai-gap-analysis-and-evaluation)
-  - [4.1. Các test case hoặc lỗi AI bỏ sót](#41-các-test-case-hoặc-lỗi-ai-bỏ-sót)
-  - [4.2. Đầu ra AI chưa chính xác hoặc chưa đầy đủ](#42-đầu-ra-ai-chưa-chính-xác-hoặc-chưa-đầy-đủ)
-  - [4.3. Phân tích nguyên nhân](#43-phân-tích-nguyên-nhân)
-  - [4.4. So sánh trước và sau khi rà soát](#44-so-sánh-trước-và-sau-khi-rà-soát)
-  - [4.5. Bài học rút ra](#45-bài-học-rút-ra)
-- [5. Agent Skills và tự động hóa](#5-agent-skills-và-tự-động-hóa)
-  - [5.1. Mục tiêu](#51-mục-tiêu)
-  - [5.2. Thiết kế Skill cho Domain Testing](#52-thiết-kế-skill-cho-domain-testing)
-  - [5.3. Thiết kế Skill cho BVA](#53-thiết-kế-skill-cho-bva)
-  - [5.4. Cách sử dụng và đầu vào/đầu ra](#54-cách-sử-dụng-và-đầu-vàođầu-ra)
-  - [5.5. Minh họa chạy Skill trên feature](#55-minh-họa-chạy-skill-trên-feature)
-  - [5.6. Đánh giá hiệu quả và giới hạn](#56-đánh-giá-hiệu-quả-và-giới-hạn)
-  - [5.7. Video demo và liên kết](#57-video-demo-và-liên-kết)
-- [6. Test Summary Report](#6-test-summary-report)
-  - [6.1. Tóm tắt phạm vi](#61-tóm-tắt-phạm-vi)
-  - [6.2. Thống kê test case](#62-thống-kê-test-case)
-  - [6.3. Thống kê lỗi](#63-thống-kê-lỗi)
-  - [6.4. Đánh giá mức độ hoàn thành](#64-đánh-giá-mức-độ-hoàn-thành)
-  - [6.5. Hạn chế và rủi ro còn lại](#65-hạn-chế-và-rủi-ro-còn-lại)
-  - [6.6. Kết luận và đề xuất](#66-kết-luận-và-đề-xuất)
-- [Tài liệu tham khảo](#tài-liệu-tham-khảo)
-- [Phụ lục](#phụ-lục)
-  - [A. AI Audit Report](#a-ai-audit-report)
-  - [B. AI Critique](#b-ai-critique)
-  - [C. Git Commit Log](#c-git-commit-log)
-  - [D. Bộ test case đầy đủ](#d-bộ-test-case-đầy-đủ)
-  - [E. Ảnh và bằng chứng kiểm thử](#e-ảnh-và-bằng-chứng-kiểm-thử)
-  - [F. Agent Skills và hướng dẫn sử dụng](#f-agent-skills-và-hướng-dẫn-sử-dụng)
-- [Checklist trước khi nộp](#checklist-trước-khi-nộp)
+- [3. AI Gap Analysis and Evaluation](#3-ai-gap-analysis-and-evaluation)
+  - [3.1. Các test case hoặc lỗi AI bỏ sót](#31-các-test-case-hoặc-lỗi-ai-bỏ-sót)
+  - [3.2. Đầu ra AI chưa chính xác hoặc chưa đầy đủ](#32-đầu-ra-ai-chưa-chính-xác-hoặc-chưa-đầy-đủ)
+  - [3.3. Phân tích nguyên nhân](#33-phân-tích-nguyên-nhân)
+  - [3.4. So sánh trước và sau khi rà soát](#34-so-sánh-trước-và-sau-khi-rà-soát)
+  - [3.5. Bài học rút ra](#35-bài-học-rút-ra)
 
 ---
 
@@ -207,22 +162,7 @@ Mục tiêu cụ thể:
 - Trạng thái giỏ hàng khi điều hướng, tải lại hoặc đăng nhập/đăng xuất, tùy thiết kế.
 - Khả năng sử dụng trên kích thước màn hình mobile và thông báo phản hồi.
 
-## 1.3. Môi trường và công cụ
-
-Hạng mục Thông tin cần ghi
-
----
-
-Phiên bản/mã commit SUT \[Commit hash hoặc phiên bản\]
-Hệ điều hành \[Windows/macOS/Linux/Android...\]
-Trình duyệt/thiết bị \[Tên và phiên bản\]
-Cơ sở dữ liệu/dữ liệu thử nghiệm \[Thông tin phù hợp\]
-Công cụ kiểm thử \[Thủ công/automation và tên công cụ\]
-Công cụ AI \[Tên mô hình/công cụ và phiên bản nếu biết\]
-Quản lý lỗi GitHub Issues: \[URL repository/issues\]
-Quản lý mã nguồn \[URL repository/branch\]
-
-## 1.4. Quy trình Domain Testing
+## 1.3. Quy trình Domain Testing
 
 Áp dụng quy trình dưới đây riêng cho từng feature và lưu lại kết quả ở Chương 2.
 
@@ -246,7 +186,7 @@ Quản lý mã nguồn \[URL repository/branch\]
 9.  **Đánh giá độ bao phủ:** ghi rõ lớp miền nào đã được kiểm tra, lớp
     nào chưa và lý do.
 
-## 1.5. Quy trình Boundary Value Analysis (3 điểm)
+## 1.4. Quy trình Boundary Value Analysis (3 điểm)
 
 Áp dụng quy trình Boundary Value Analysis theo đúng 3 điểm (giá trị ngay dưới biên, tại biên và ngay trên biên) cho các biến có miền giới hạn.
 
@@ -263,189 +203,106 @@ Quản lý mã nguồn \[URL repository/branch\]
 5.  Thực thi test case BVA (3 điểm); ghi kết quả thực tế, trạng thái và bằng chứng.
 6.  Đánh giá độ bao phủ các biên đã kiểm tra và ghi rõ biên nào chưa thể kiểm tra cùng lý do.
 
-## 1.6. Quy trình thực thi và quản lý bằng chứng
-
-- Chuẩn bị tài khoản, dữ liệu và trạng thái hệ thống cần thiết.
-- Xác nhận tiền điều kiện trước mỗi test case.
-- Thực hiện đúng các bước đã ghi; không thay đổi dữ liệu giữa chừng mà
-  không ghi lại.
-- Ghi kết quả thực tế, trạng thái Pass/Fail/Blocked/Not Executed
-- Khi phát hiện sai lệch, thử tái hiện để phân biệt lỗi sản phẩm với
-  lỗi môi trường hoặc dữ liệu thử.
-- Tạo GitHub Issue cho mỗi lỗi được xác nhận; đính kèm ảnh minh chứng
-  trực tiếp trong issue.
-- Cập nhật bảng thống kê sau mỗi đợt chạy kiểm thử.
-- Tạo Git commit cho từng bước của quy trình kiểm thử từng feature
-  theo yêu cầu bài tập.
-
-## 1.7. Quy ước trạng thái kiểm thử
-
----
-
-Trạng thái Ý nghĩa
-
----
-
-Pass Kết quả thực tế phù hợp với kết quả
-mong đợi
-
-Fail Kết quả thực tế khác kết quả mong
-đợi và đã ghi nhận bằng chứng
-
-Blocked Không thể chạy do tiền điều kiện,
-môi trường hoặc phụ thuộc bị chặn
-
-Not Executed Chưa thực thi
-
-N/A Không áp dụng; phải ghi rõ lý do
-
----
-
----
-
 # 2. Thiết kế và thực thi kiểm thử
-
-> Dùng cùng cấu trúc cho cả bốn feature. Hoàn thiện Domain Testing và
-> BVA thành hai phần riêng biệt, sau đó ghi kết quả thực thi. Các bảng
-> dưới đây là mẫu trống, không phải test case đã được xác nhận.
 
 ## 2.1. FR-03 -- Forgot password and password reset
 
 ### 2.1.1. Mô tả chức năng và yêu cầu
 
-- **Mục đích chức năng:** \[Mô tả ngắn gọn luồng quên mật khẩu hai
-  bước.\]
-- **Điểm bắt đầu/kết thúc:** \[Trang bắt đầu và trạng thái kết thúc.\]
-- **Tiền điều kiện:** \[Điều kiện cần có trước khi chạy.\]
-- **Luồng nghiệp vụ:** \[Bước 1, bước 2 và các nhánh lỗi.\]
-- **Nguồn yêu cầu:** \[Tài liệu/mã nguồn/giao diện và vị trí tham
-  chiếu.\]
-- **Giả định cần xác minh:** \[Liệt kê; không xem giả định là yêu cầu
-  chính thức.\]
+- **Mục đích chức năng:** Cho phép người dùng khôi phục tài khoản khi quên mật khẩu qua hai bước: (1) nhập email đã đăng ký để nhận mã OTP -- trong môi trường demo, mã OTP hiển thị trực tiếp trên màn hình thay vì gửi email; (2) nhập OTP và mật khẩu mới để đặt lại mật khẩu.
+- **Điểm bắt đầu/kết thúc:** Bắt đầu tại trang "Quên Mật Khẩu". Kết thúc: thông báo "Đổi mật khẩu thành công!" và chuyển hướng về trang đăng nhập; hoặc kết thúc sớm bằng thông báo lỗi tương ứng.
+- **Tiền điều kiện:** Bước 1 -- đã có tài khoản đăng ký với email tồn tại trong CSDL (dữ liệu mẫu: `test@eshop.com`, `admin@eshop.com`). Bước 2 -- đã nhận mã OTP hợp lệ cho email vừa yêu cầu.
+- **Luồng nghiệp vụ:**
+  - Flow 1 (thành công): Nhập email hợp lệ → nhận mã OTP và chuyển sang bước 2 → nhập OTP đúng + mật khẩu mới hợp lệ → "Đổi mật khẩu thành công!" → chuyển về trang đăng nhập.
+  - Flow 2 (lỗi bước 1): Email không tồn tại / sai định dạng → lỗi "User not found" (HTTP 404).
+  - Flow 3 (lỗi bước 2): OTP sai → lỗi "Mã OTP không đúng hoặc có lỗi xảy ra." (backend trả "Invalid token or email", HTTP 400); mật khẩu yếu → cảnh báo phía client "Mật khẩu quá yếu!" và từ chối submit.
+- **Giả định cần xác minh** (chưa xem là yêu cầu chính thức; đã đối chiếu mã nguồn):
+  1. SRS yêu cầu OTP 6 chữ số, nhưng mã nguồn sinh 4 chữ số (1000--9999, `server.js` dòng 72) và nhãn UI ghi "Mã OTP (4 số)".
+  2. SRS yêu cầu trường "Xác nhận mật khẩu mới", nhưng UI thực tế không có trường này.
+  3. SRS yêu cầu chỉ báo bước "Bước 1 / 2" và nút "Quay lại đăng nhập", nhưng UI không hiển thị chỉ báo bước; bước 2 có nút "← Quay lại" chỉ quay về bước 1, bước 1 không có nút về trang đăng nhập.
+  4. SRS cho phép mật khẩu có "ký tự đặc biệt/khoảng trắng", nhưng regex thực tế bắt buộc khoảng trắng (`(?=.*\s)`) và không chấp nhận ký tự đặc biệt (chỉ `[A-Za-z\d\s]`).
+  5. SRS không nêu thời hạn OTP; mã nguồn không cài đặt thời hạn cho `reset_token` (lưu đến khi được dùng hoặc cấp lại).
+  6. Token chỉ dùng một lần: `reset_token` bị xóa (`NULL`) sau khi reset thành công -- **đã xác nhận bằng thực thi**: dùng lại OTP cũ ngay sau khi đổi mật khẩu thành công bị từ chối (HTTP 400 "Invalid token or email").
 
 ### 2.1.2. Domain Testing -- phân tích miền
 
----
+| Biến/điều kiện | Miền/lớp hợp lệ | Miền/lớp không hợp lệ | Căn cứ | Cần xác minh? |
+| --- | --- | --- | --- | --- |
+| Email/định danh | Email đúng định dạng và đã đăng ký trong CSDL (VD: `test@eshop.com`) | (a) Đúng định dạng nhưng chưa đăng ký (VD: `notfound@eshop.com`); (b) sai định dạng (VD: `abc`, thiếu `@`). Lưu ý: ô nhập là `type="text"` nên trình duyệt không kiểm tra định dạng; mọi chuỗi không khớp CSDL đều trả về "User not found" (HTTP 404) -- lớp (b) thực tế hành xử giống lớp (a) | SRS FR-03 ; `server.js` dòng 68--71 (tra cứu chính xác email, trả 404); `ForgotPassword.jsx` dòng 50--55 | Có (hành vi lớp sai định dạng khi thực thi) -- **đã xác nhận bằng thực thi**: `abc` trả 404 "User not found" giống hệt email chưa đăng ký |
+| Trạng thái tài khoản | Tài khoản tồn tại trong bảng `users` | Tài khoản không tồn tại (không có bản ghi) | `server.js` dòng 70--71; `database.js` dòng 50--63 (bảng `users`), dòng 92--93 (dữ liệu mẫu) | Không (đã đối chiếu khi thực thi: dữ liệu mẫu tồn tại, đăng nhập được) |
+| Mã xác minh/token (resetToken) | OTP trùng khớp `reset_token` đang lưu của email đã yêu cầu; theo mã nguồn gồm 4 chữ số (VD: `1234`), theo SRS là 6 chữ số | OTP sai (VD: `9999`); OTP rỗng; token đã bị xóa (`NULL`) sau lần reset thành công trước đó | SRS FR-03; `server.js` dòng 72 (sinh token 4 chữ số), dòng 87--94 (đối chiếu email + token); `ForgotPassword.jsx` dòng 69--77 | Có (độ dài OTP khác SRS; token dùng một lần) -- **đã xác nhận bằng thực thi**: OTP thực tế 4 chữ số; OTP sai và OTP đã dùng đều bị từ chối (HTTP 400); OTP rỗng bị `required` chặn submit |
+| Mật khẩu mới | Theo SRS: tối thiểu 8 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt/khoảng trắng (VD: `Abc12345!`) | Dưới 8 ký tự (VD: `Ab1!`); rỗng; đủ dài nhưng thiếu độ phức tạp. Lưu ý: regex thực tế `/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\s)[A-Za-z\d\s]{8,}$/` bắt buộc khoảng trắng, không nhận ký tự đặc biệt -- mâu thuẫn SRS | SRS FR-03 (quy tắc mật khẩu theo FR-01); `ForgotPassword.jsx` dòng 26--30 | Có (regex thực tế khác SRS) -- **đã xác nhận bằng thực thi**: mọi mật khẩu chứa `!` và thiếu khoảng trắng đều bị chặn với cảnh báo "Mật khẩu quá yếu!"; mật khẩu thỏa regex thực tế (`Abc 1234`) được chấp nhận |
+| Xác nhận mật khẩu (confirmPassword) | Trùng khớp hoàn toàn mật khẩu mới | Không khớp mật khẩu mới | SRS FR-03 (`feature-overview.md`) | Có -- UI thực tế không có trường xác nhận (`ForgotPassword.jsx`) nên lớp này hiện không thể kiểm thử qua giao diện; sai lệch so với SRS -- **đã xác nhận khi thực thi**: giao diện bước 2 chỉ có 1 ô mật khẩu, không có nhãn "Xác nhận mật khẩu" |
+| Trạng thái luồng hai bước | Bước 1: nhập email → nhận OTP; bước 2: nhập OTP + mật khẩu mới; có nút "← Quay lại" về bước 1 | Thao tác ở bước 2 khi chưa có OTP hợp lệ (yêu cầu reset bị từ chối vì email + token không khớp CSDL) | `ForgotPassword.jsx` (state `step` 1/2 -- dòng 7, 45--97); `server.js` dòng 87--94 | Có (SRS yêu cầu chỉ báo "Bước 1 / 2" và nút quay lại đăng nhập -- UI chưa có) -- **đã xác nhận bằng thực thi**: không có chỉ báo bước ở cả 2 bước; bước 1 không có nút về trang đăng nhập; nút "← Quay lại" hoạt động đúng (về bước 1) |
 
-Biến/điều kiện Miền/lớp hợp Miền/lớp không Căn cứ Cần xác minh?
-lệ hợp lệ
-
----
-
-Email/định \[Điền\] \[Điền\] \[Yêu cầu/mã \[Có/Không\]
-danh nguồn\]
-
-Trạng thái tài \[Điền\] \[Điền\] \[Yêu cầu/mã \[Có/Không\]
-khoản nguồn\]
-
-Mã xác \[Điền\] \[Điền\] \[Yêu cầu/mã \[Có/Không\]
-minh/token nguồn\]  
- (nếu có)
-
-Mật khẩu mới \[Điền\] \[Điền\] \[Yêu cầu/mã \[Có/Không\]
-(nếu có) nguồn\]
-
-Xác nhận mật \[Điền\] \[Điền\] \[Yêu cầu/mã \[Có/Không\]
-khẩu (nếu có) nguồn\]
-
-Trạng thái \[Điền\] \[Điền\] \[Yêu cầu/mã \[Có/Không\]
-luồng hai bước nguồn\]
-
----
-
-**Giải thích phân hoạch miền:** \[Giải thích vì sao các giá trị được xếp
-vào từng lớp, lớp nào có hành vi khác nhau và những trường hợp nào được
-ưu tiên.\]
+**Giải thích phân hoạch miền:** Miền được phân theo từng biến đầu vào của hai bước; mỗi biến tách thành lớp hợp lệ/không hợp lệ vì chúng tạo ra kết quả đầu ra khác nhau: thông báo thành công và chuyển trang ("Đổi mật khẩu thành công!") so với các thông báo lỗi riêng ("User not found", "Mã OTP không đúng hoặc có lỗi xảy ra.", "Mật khẩu quá yếu!"). Giá trị đại diện ưu tiên happy path (email hợp lệ → OTP đúng → mật khẩu hợp lệ) và các lớp lỗi có thông báo riêng để đối chiếu trực tiếp khi thực thi. Các sai lệch SRS ↔ mã nguồn (OTP 4 chữ số thay vì 6; thiếu trường xác nhận mật khẩu; thiếu chỉ báo bước; regex mật khẩu bắt buộc khoảng trắng) được đánh dấu "Cần xác minh" và sẽ được xác nhận bằng thực thi. Lớp "email sai định dạng" về hành vi bị gộp chung với lớp "email không tồn tại" (đều trả về 404 "User not found") nên khi thực thi có thể dùng chung một giá trị đại diện để xác nhận hành vi gộp này.
 
 ### 2.1.3. Test case Domain Testing
 
----
+| Test Case ID | Lớp miền/điều kiện | Tiền điều kiện | Dữ liệu đầu vào | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Trạng thái |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| FR03-DT-01 | Email hợp lệ (đã đăng ký) | User đã đăng ký tài khoản | `email = "test@eshop.com"` | 1. Truy cập trang Quên mật khẩu<br>2. Nhập email hợp lệ<br>3. Bấm "Lấy mã OTP" | Hiển thị thông báo chứa mã OTP ("Mã OTP của bạn là: ..."), giao diện chuyển sang bước nhập OTP & mật khẩu (SRS: kèm chỉ báo bước "Bước 1 / 2") | Luồng chính đúng: HTTP 200, hiện "Mã OTP của bạn là: 4197" (4 chữ số, hiển thị trực tiếp trên màn hình), chuyển sang bước 2 với ô OTP + ô mật khẩu và nút "← Quay lại" -- nhưng **không có chỉ báo bước "Bước 1 / 2"** (và bước 1 không có nút "Quay lại đăng nhập") như SRS yêu cầu | **Fail → BUG-FR03-01** (thiếu step indicator) |
+| FR03-DT-02 | Email không hợp lệ (chưa đăng ký) | Không có | `email = "notfound@eshop.com"` | 1. Truy cập trang Quên mật khẩu<br>2. Nhập email chưa đăng ký<br>3. Bấm "Lấy mã OTP" | Hiển thị lỗi "User not found" (HTTP 404) | HTTP 404 `{"error":"User not found"}`; dialog "Lỗi: User not found"; ở lại trang /forgot-password | **Pass** |
+| FR03-DT-03 | Happy path bước 2 (OTP đúng, mật khẩu hợp lệ, xác nhận khớp) | Đã nhận mã OTP cho email đã đăng ký (VD: `1234`) | `email = "test@eshop.com"`, `resetToken = "1234"`, `newPassword = "Abc12345!"`, `confirmPassword = "Abc12345!"` (xem ghi chú 1) | 1. Nhập mã OTP chính xác<br>2. Nhập mật khẩu mới hợp lệ (và xác nhận khớp nếu có trường)<br>3. Bấm "Đặt lại mật khẩu" | Thông báo "Đổi mật khẩu thành công!", chuyển hướng về trang đăng nhập; đăng nhập được bằng mật khẩu mới | UI không có trường xác nhận mật khẩu (bỏ qua dữ liệu `confirmPassword`, ghi chú 1). OTP đúng + mật khẩu `Abc12345!` (hợp lệ theo SRS) → popup "Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT."; **không gửi yêu cầu** lên server (regex frontend chặn); ở lại trang, mật khẩu không đổi (đăng nhập bằng mật khẩu cũ `Test1234!` vẫn HTTP 200) | **Fail → BUG-FR03-02** (regex khác SRS) |
+| FR03-DT-04 | OTP không hợp lệ (sai OTP) | Đã nhận mã OTP | `resetToken = "9999"` (sai OTP), email hợp lệ, mật khẩu hợp lệ | 1. Nhập mã OTP sai<br>2. Nhập mật khẩu hợp lệ<br>3. Bấm "Đặt lại mật khẩu" | Hiển thị lỗi "Mã OTP không đúng hoặc có lỗi xảy ra." (backend trả 400 "Invalid token or email") | Nhập OTP thật (`9359`) nhận được ở bước 1, OTP submit = `9999` (sai), mật khẩu hợp lệ theo regex thực tế (`Abc 1234`) → HTTP 400 `{"error":"Invalid token or email"}`; dialog "Mã OTP không đúng hoặc có lỗi xảy ra."; ở lại trang | **Pass** |
+| FR03-DT-05 | Mật khẩu mới không hợp lệ (quá ngắn) | Đã nhận mã OTP | `newPassword = "Ab1!"` (4 ký tự, dưới 8) | 1. Nhập OTP đúng<br>2. Nhập mật khẩu quá ngắn<br>3. Bấm "Đặt lại mật khẩu" | Hiển thị cảnh báo "Mật khẩu quá yếu!...", từ chối submit (không gửi yêu cầu lên server) | Popup "Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT."; không có request nào gửi lên `/api/reset-password`; ở lại trang | **Pass** |
 
-Test Case ID Lớp miền/điều Tiền điều Dữ liệu Các bước Kết quả Kết quả Trạng Bằng chứng
-kiện kiện đầu vào thực hiện mong đợi thực tế thái
+Ghi chú:
 
----
+1.  Test case giữ dữ liệu `confirmPassword` theo thiết kế dựa trên SRS; tuy nhiên UI thực tế không có trường này (đã xác minh trong `ForgotPassword.jsx`) -- khi thực thi bỏ qua dữ liệu xác nhận và ghi nhận sai lệch (xem 2.1.7). Ngoài ra, `Abc12345!` thỏa mãn SRS nhưng không thỏa mãn regex thực tế (thiếu khoảng trắng, chứa ký tự đặc biệt) nên dự kiến bị chặn khi thực thi (xem 2.1.4) -- **thực thi đã xác nhận đúng**: bị chặn ở client, FAIL → BUG-FR03-02.
 
-FR03-DT-01 \[Lớp hợp \[Điền\] \[Điền\] \[Điền\] \[Điền\] \[Sau \[Chưa \[Link/đường
-lệ\] khi chạy\] dẫn\]
-chạy\]
-
-FR03-DT-02 \[Lớp không \[Điền\] \[Điền\] \[Điền\] \[Điền\] \[Sau \[Chưa \[Link/đường
-hợp lệ\] khi chạy\] dẫn\]
-chạy\]
-
-FR03-DT-03 \[Lớp/trạng \[Điền\] \[Điền\] \[Điền\] \[Điền\] \[Sau \[Chưa \[Link/đường
-thái khác\] khi chạy\] dẫn\]
-chạy\]
-
----
-
-**Đánh giá Domain Testing:** \[Số lớp đã xác định, số lớp đã được kiểm
-tra, lớp còn thiếu và lý do.\]
+**Đánh giá Domain Testing:** 5 test case thiết kế phủ được các lớp: email hợp lệ, email chưa đăng ký, happy path bước 2 (OTP đúng + mật khẩu hợp lệ), OTP sai, mật khẩu quá ngắn. Sau khi rà soát, coverage report của AI (khai báo email 3/3 lớp, resetToken 3/3 lớp, newPassword 4/5 lớp) cao hơn thực tế -- có 4 lớp được khai báo nhưng chưa có test case riêng: (1) email sai định dạng; (2) OTP rỗng; (3) mật khẩu rỗng; (4) mật khẩu đủ 8 ký tự nhưng thiếu độ phức tạp. Đề xuất bổ sung trước khi thực thi: `email = "abc"` (thiếu `@`, dự kiến 404 "User not found" do không có kiểm tra định dạng phía client), `resetToken = ""` (dự kiến trình duyệt chặn submit do `required`), `newPassword = ""` (chặn submit do `required`), `newPassword = "abcdefgh"` (dự kiến cảnh báo mật khẩu yếu). Lớp "xác nhận mật khẩu không khớp" không thể kiểm thử qua UI do thiếu trường (sai lệch SRS, xem 2.1.7). **Kết quả sau khi thực thi:** 4 bổ sung đề xuất đã chạy kiểm chứng bổ sung và khớp đúng dự đoán: `abc` → 404 "User not found"; OTP rỗng → chặn bởi `required` ("Please fill out this field.", không gửi request); mật khẩu rỗng → chặn bởi `required`; `abcdefgh` → popup "Mật khẩu quá yếu!". Như vậy toàn bộ các lớp đã khai báo trong coverage report đều có dữ liệu thực thi tương ứng (nhưng các lớp này vẫn không được AI thiết kế thành test case riêng -- ghi nhận vào 2.1.7).
 
 ### 2.1.4. BVA -- phân tích biên
 
----
+| Biến/điều kiện | Biên dưới | Biên trên | Căn cứ xác định biên | Giá trị cần thử | Ghi chú |
+| --- | --- | --- | --- | --- | --- |
+| Email/định danh | Không có | Không có | SRS FR-03 không quy định giới hạn độ dài/định dạng; `server.js` chỉ tra cứu chính xác chuỗi email; ô nhập `type="text"` không kiểm tra | Không áp dụng | Không có biên nào được xác minh cho email |
+| Mật khẩu mới | 8 ký tự (độ dài tối thiểu) | Không có (không ràng buộc độ dài tối đa) | SRS FR-03/FR-01 (tối thiểu 8 ký tự); regex `{8,}` trong `ForgotPassword.jsx` dòng 26 | Min-1: 7 ký tự (`Abc12!`); Min: 8 ký tự (`Abc1234!`); Min+1: 9 ký tự (`Abc12345!`) | Giá trị chọn theo SRS. Regex thực tế bắt buộc khoảng trắng và không nhận ký tự đặc biệt nên cả 3 giá trị dự kiến bị chặn khi thực thi; cần bộ bổ sung thỏa mãn regex thực tế để cô lập biên độ dài: `Abc 123` (7), `Abc 1234` (8), `Abc 12345` (9) |
+| Thời hạn token/mã | Không có | Không có | `server.js` không cài đặt thời hạn cho `reset_token` (lưu đến khi dùng hoặc cấp lại); `database.js` chỉ có cột `reset_token TEXT`, không có cột hết hạn; SRS không quy định | Không áp dụng (chưa xác minh) | SUT không có thời hạn token nên không thể áp dụng BVA 3 điểm cho biên này |
 
-Biến/điều Biên dưới Biên trên Căn cứ xác Giá trị cần thử Ghi chú
-kiện định biên
-
----
-
-Email/định \[Nếu có\] \[Nếu có\] \[Yêu \[Dưới/tại/trên \[Điền\]
-danh cầu/mã biên phù hợp\]  
- nguồn\]
-
-Mật khẩu mới \[Nếu có\] \[Nếu có\] \[Yêu \[Dưới/tại/trên \[Điền\]
-cầu/mã biên phù hợp\]  
- nguồn\]
-
-Thời hạn \[Nếu có\] \[Nếu có\] \[Yêu \[Trước/tại/sau \[Điền\]
-token/mã cầu/mã thời điểm biên\]  
- (nếu có) nguồn\]
-
----
-
-**Giải thích BVA:** \[Nêu từng biên, cách chọn giá trị ngay
-dưới/tại/ngay trên biên và kết quả mong đợi. Nếu không có giới hạn được
-xác minh, ghi rõ không áp dụng/chưa xác định.\]
+**Giải thích BVA:** Biên duy nhất xác minh được là độ dài tối thiểu 8 ký tự của mật khẩu mới, chọn đúng 3 điểm: Min-1 = 7 ký tự (`Abc12!`) → hệ thống báo lỗi "Mật khẩu quá yếu!"; Min = 8 ký tự (`Abc1234!`) → đổi mật khẩu thành công; Min+1 = 9 ký tự (`Abc12345!`) → đổi mật khẩu thành công (kỳ vọng theo SRS/FR-01). Điểm cần lưu ý sau khi rà soát mã nguồn: regex frontend bắt buộc khoảng trắng (`(?=.*\s)`) và chỉ chấp nhận `[A-Za-z\d\s]` nên cả 3 giá trị theo SRS ở trên đều chứa `!` và không có khoảng trắng -- dự kiến bị chặn với cảnh báo "Mật khẩu quá yếu!"; khi thực thi, FR03-BVA-02/03 được dự kiến Fail và xác nhận sai lệch regex (xem 2.1.7). Đồng thời chạy bổ sung bộ `Abc 123` / `Abc 1234` / `Abc 12345` (thỏa mãn regex thực tế, chỉ khác độ dài) để kiểm chứng riêng biên 8 ký tự. Biên tiềm năng khác chưa được thiết kế test case: độ dài OTP (SRS 6 chữ số, mã nguồn 4 chữ số -- biên 3/4/5 chữ số theo hành vi thực tế), cần xác nhận quy tắc thực tế trước khi thiết kế. Email và thời hạn token không có biên được xác minh (không áp dụng). **Kết quả thực thi (2026-10-18):** BVA-02/03 Fail đúng như dự đoán (BUG-FR03-02); bộ bổ sung 3 điểm `Abc 123`/`Abc 1234`/`Abc 12345` cho kết quả 7 ký tự bị chặn / 8 và 9 ký tự thành công (có điều hướng về `/login`) → biên dưới 8 ký tự được xác nhận chính xác khi cô lập khỏi sai lệch regex. OTP quan sát được luôn 4 chữ số (khớp mã nguồn, khác SRS 6 chữ số).
 
 ### 2.1.5. Test case BVA
 
----
+| Test Case ID | Biến/biên kiểm thử | Giá trị | Tiền điều kiện | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Trạng thái |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| FR03-BVA-01 | Độ dài mật khẩu -- Min-1 | `newPassword = "Abc12!"` (7 ký tự) | Đã nhận mã OTP | 1. Nhập OTP hợp lệ<br>2. Nhập mật khẩu 7 ký tự<br>3. Bấm "Đặt lại mật khẩu" | Hệ thống báo lỗi "Mật khẩu quá yếu!" (chưa đạt tối thiểu 8 ký tự), từ chối submit | Popup "Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT."; không gửi request; ở lại trang. **Lưu ý:** từ chối do vi phạm đồng thời cả độ dài (7 < 8) lẫn regex thực tế (chứa `!`, thiếu khoảng trắng) -- biên độ dài bị che khuất, cần bộ bổ sung S-BVA-01 để cô lập | **Pass** |
+| FR03-BVA-02 | Độ dài mật khẩu -- Min | `newPassword = "Abc1234!"` (8 ký tự) | Đã nhận mã OTP | 1. Nhập OTP hợp lệ<br>2. Nhập mật khẩu đúng 8 ký tự có đủ chữ hoa/thường/số/ký tự đặc biệt<br>3. Bấm "Đặt lại mật khẩu" | Đổi mật khẩu thành công (kỳ vọng theo SRS -- xem ghi chú 1) | Popup "Mật khẩu quá yếu!..."; mật khẩu 8 ký tự hợp lệ theo SRS bị regex thực tế từ chối vì chứa `!` và không có khoảng trắng; không gửi request; mật khẩu không đổi | **Fail → BUG-FR03-02** |
+| FR03-BVA-03 | Độ dài mật khẩu -- Min+1 | `newPassword = "Abc12345!"` (9 ký tự) | Đã nhận mã OTP | 1. Nhập OTP hợp lệ<br>2. Nhập mật khẩu 9 ký tự hợp lệ<br>3. Bấm "Đặt lại mật khẩu" | Đổi mật khẩu thành công (kỳ vọng theo SRS -- xem ghi chú 1) | Popup "Mật khẩu quá yếu!..."; mật khẩu 9 ký tự hợp lệ theo SRS bị regex thực tế từ chối vì chứa `!` và không có khoảng trắng; không gửi request; mật khẩu không đổi | **Fail → BUG-FR03-02** |
+| FR03-BVA-01S | Bổ sung -- biên độ dài với mật khẩu thỏa regex thực tế: Min-1 | `newPassword = "Abc 123"` (7 ký tự) | Đã nhận mã OTP (kiểm thử bổ sung, không tính số liệu chính thức) | 1. Nhập OTP hợp lệ<br>2. Nhập mật khẩu 7 ký tự thỏa regex thực tế (`[A-Za-z\d\s]`, có khoảng trắng)<br>3. Bấm "Đặt lại mật khẩu" | Báo lỗi "Mật khẩu quá yếu!" -- bị chặn do chỉ thiếu độ dài | Popup "Mật khẩu quá yếu!..."; không gửi request → biên dưới 8 ký tự hoạt động đúng khi tách khỏi ảnh hưởng regex | Pass (bổ sung) |
+| FR03-BVA-02S | Bổ sung -- Min | `newPassword = "Abc 1234"` (8 ký tự) | Đã nhận mã OTP | 1. Nhập OTP hợp lệ<br>2. Nhập mật khẩu 8 ký tự thỏa regex thực tế<br>3. Bấm "Đặt lại mật khẩu" | Đổi mật khẩu thành công | Popup "Đổi mật khẩu thành công!"; HTTP 200 `{"message":"Password reset successfully"}`; **điều hướng về `/login`**; đăng nhập bằng `Abc 1234` HTTP 200 → biên Min hoạt động đúng | Pass (bổ sung) |
+| FR03-BVA-03S | Bổ sung -- Min+1 | `newPassword = "Abc 12345"` (9 ký tự) | Đã nhận OTP mới sau lần reset thành công trước | 1. Nhập OTP hợp lệ mới<br>2. Nhập mật khẩu 9 ký tự thỏa regex thực tế<br>3. Bấm "Đặt lại mật khẩu" | Đổi mật khẩu thành công | Popup "Đổi mật khẩu thành công!"; HTTP 200; điều hướng về `/login`; đăng nhập bằng `Abc 12345` HTTP 200 → biên Min+1 hoạt động đúng | Pass (bổ sung) |
 
-Test Case ID Biến/biên Giá trị Tiền điều Các bước Kết quả Kết quả Trạng Bằng chứng
-kiểm thử kiện thực hiện mong đợi thực tế thái
+Ghi chú:
 
----
+1.  Kỳ vọng đặt theo SRS. Qua rà soát mã nguồn, regex thực tế bắt buộc khoảng trắng và không chấp nhận ký tự đặc biệt (xem 2.1.4) nên khi thực thi dự kiến cả hai TC Fail với cảnh báo "Mật khẩu quá yếu!"; chạy bổ sung `Abc 1234` (8 ký tự) và `Abc 12345` (9 ký tự) để xác nhận biên độ dài với mật khẩu thỏa mãn regex thực tế. **Kết quả thực thi khớp đúng dự đoán:** FR03-BVA-02/03 Fail do regex; bộ bổ sung BVA-01S/02S/03S đều Pass chứng tỏ biên 8 ký tự bản thân hoạt động đúng -- nguyên nhân Fail nằm trọn ở sai lệch regex SRS ↔ mã nguồn (BUG-FR03-02).
 
-FR03-BVA-01 \[Biên \[Điền\] \[Điền\] \[Điền\] \[Điền\] \[Sau \[Chưa \[Link\]
-dưới\] khi chạy\]  
- chạy\]
+### 2.1.6. Kết quả thực thi
 
-FR03-BVA-02 \[Tại \[Điền\] \[Điền\] \[Điền\] \[Điền\] \[Sau \[Chưa \[Link\]
-biên\] khi chạy\]  
- chạy\]
-
-FR03-BVA-03 \[Biên \[Điền\] \[Điền\] \[Điền\] \[Điền\] \[Sau \[Chưa \[Link\]
-trên\] khi chạy\]  
- chạy\]
-
----
-
-### 2.1.6. Kết quả thực thi và bằng chứng
-
-- Tổng test case Domain Testing: \[ \]
-- Tổng test case BVA: \[ \]
-- Pass: \[ \] \| Fail: \[ \] \| Blocked: \[ \] \| Not Executed: \[ \]
-- Bug liên quan: \[ID/link hoặc "Chưa phát hiện sau khi thực thi"\]
-- Bằng chứng: \[Thư mục ảnh/video/log\]
-- Nhận xét: \[Kết quả nổi bật và phạm vi chưa kiểm tra.\]
+- **Cách thức thực thi:** 2026-10-18, chạy trực tiếp trên giao diện frontend-web (`http://localhost:5173/forgot-password`, React + Vite) bằng trình duyệt Edge (Chromium) chế độ headless; backend Node/Express + SQLite chạy tại `http://localhost:3000` với CSDL seed sạch. Kết quả HTTP và popup (alert) được ghi nhận tự động theo từng bước của test case; sau mỗi đợt chạy, backend được khởi động lại để re-seed CSDL về trạng thái gốc (`test@eshop.com / Test1234!`).
+- Tổng test case Domain Testing: 5 -- đã thực thi **5/5** (Pass 3 | Fail 2)
+- Tổng test case BVA: 3 -- đã thực thi **3/3** (Pass 1 | Fail 2); ngoài ra 3 test bổ sung (BVA-01S/02S/03S, mật khẩu thỏa regex thực tế) đều Pass -- không tính vào số liệu chính thức
+- Tổng kết cả hai kỹ thuật: **8 test case chính thức, thực thi 8/8: Pass 4 | Fail 4 | Blocked 0 | Not Executed 0**
+- Bug xác nhận qua thực thi (2/4 sai lệch SRS ↔ mã nguồn liệt kê tại 2.1.1 cấu thành Fail của test case; mỗi bug có GitHub Issue tương ứng):
+  - **BUG-FR03-01 -- Thiếu chỉ báo bước "Bước 1 / 2" và nút "Quay lại đăng nhập" ở bước 1** (sai lệch số 3, SRS FR-03): xác nhận qua FR03-DT-01 -- giao diện chỉ có 2 bước chuyển qua lại bằng nút "← Quay lại", không hiển thị bước hiện tại. Severity: Medium. GitHub Issue: [#1](https://github.com/kiterakun/HW02-Domain_Testing/issues/1)
+  - **BUG-FR03-02 -- Regex mật khẩu khác SRS, từ chối mọi mật khẩu hợp lệ theo SRS** (sai lệch số 4; Critical): xác nhận qua FR03-DT-03, FR03-BVA-02, FR03-BVA-03 -- `Abc12345!`/`Abc1234!`/`Abc12345!` đều bị chặn ở client với popup "Mật khẩu quá yếu!..." và không có request nào gửi lên server; ngược lại `Abc 1234` / `Abc 12345` (có khoảng trắng) được chấp nhận. Hệ quả nặng nhất: **không thể hoàn thành luồng đổi mật khẩu bằng bất kỳ mật khẩu nào thỏa mãn SRS** (mật khẩu hợp lệ duy nhất phải chứa khoảng trắng, không được chứa ký tự đặc biệt). GitHub Issue: [#2](https://github.com/kiterakun/HW02-Domain_Testing/issues/2)
+  - (Sai lệch số 1 -- OTP 4 chữ số, và sai lệch số 2 -- thiếu trường xác nhận mật khẩu, cũng đã được xác nhận khi thực thi nhưng không cấu thành Fail của test case nào: OTP 4 chữ số là quy ước demo hiển thị ngay trên màn hình, trường xác nhận mật khẩu bị bỏ qua trong FR03-DT-03.)
+- Các xác nhận khác từ thực thi: (1) token dùng một lần -- dùng lại OTP cũ sau reset thành công trả HTTP 400 "Invalid token or email", ngay sau đó OTP mới cùng phiên vẫn đổi thành công; (2) email sai định dạng `abc` hành xử như email chưa đăng ký (HTTP 404 "User not found", không có kiểm tra format phía client); (3) OTP rỗng/mật khẩu rỗng bị thuộc tính `required` của trình duyệt chặn submit ("Please fill out this field.", không gửi request); (4) `abcdefgh` (8 ký tự, thiếu độ phức tạp) bị cảnh báo "Mật khẩu quá yếu!"; (5) OTP thực tế 4 chữ số, hiển thị trực tiếp trên màn hình như mô tả demo; (6) reset thành công điều hướng về trang đăng nhập (`/login`); nút "← Quay lại" về bước 1 hoạt động đúng.
+- Nhận xét: Luồng "email hợp lệ → nhận OTP" và "OTP sai → báo lỗi" hoạt động đúng như thiết kế; các lỗi Fail đều bắt nguồn từ 2 sai lệch SRS ↔ mã nguồn đã được báo trước ở 2.1.2/2.1.4 (bây giờ đã được chứng minh bằng thực thi thay vì chỉ đọc mã). Không có test case nào Fail ngoài dự đoán. Sau thực thi, mật khẩu `Test1234!` tại thời điểm chạy bị thay đổi tạm bởi test bổ sung (reset thành công về `Abc 12345`) và đã được khôi phục bằng re-seed CSDL.
 
 ### 2.1.7. Đánh giá feature
 
-\[Đánh giá mức bao phủ lớp miền và biên, các rủi ro còn lại, những điều
-AI đề xuất hữu ích/chưa chính xác và phần người kiểm thử đã bổ sung.\]
+- **Độ bao phủ lớp miền và biên:** Domain Testing phủ được 5 lớp chính (email hợp lệ, email chưa đăng ký, happy path bước 2, OTP sai, mật khẩu quá ngắn) -- thực thi 5/5; BVA phủ đủ 3 điểm (Min-1/Min/Min+1) của biên duy nhất được xác minh (độ dài tối thiểu 8 ký tự của mật khẩu) -- thực thi 3/3, cộng 3 điểm bổ sung cô lập regex đều Pass. Các lớp còn lại (email sai định dạng, OTP rỗng, mật khẩu rỗng, mật khẩu thiếu độ phức tạp) đã được kiểm chứng bằng 4 kiểm thử bổ sung theo dữ liệu đề xuất ở 2.1.3 và khớp đúng dự đoán; lớp "xác nhận mật khẩu không khớp" xác nhận không thể kiểm thử qua UI do thiếu trường; lớp "OTP đã dùng" được kiểm chứng qua probe dùng lại token sau reset thành công (bị từ chối HTTP 400). Không còn lớp nào đã định nghĩa mà chưa có dữ liệu thực thi tương ứng.
+- **Rủi ro còn lại:** môi trường demo hiển thị OTP trực tiếp trên màn hình nên không kiểm thử được việc gửi email thật; SUT không cài đặt thời hạn token nên không thể kiểm thử lớp "OTP hết hạn"; OTP 4 chữ số theo mã nguồn có không gian giá trị nhỏ -- rủi ro bảo mật nằm ngoài phạm vi kiểm thử chức năng nhưng đáng ghi nhận. Ngoài ra, việc kiểm tra mật khẩu chỉ nằm ở frontend (frontend-only regex) đồng nghĩa API `POST /api/reset-password` không có kiểm tra độ phức tạp phía server (chỉ từ chối khi email + token không khớp) -- chưa đưa vào test case do nằm ngoài phạm vi 2 bước của SRS nhưng là rủi ro đáng ghi nhận.
+- **Đóng góp hữu ích của AI:** bộ test case bám sát SRS, phân lớp biến rõ ràng (email, resetToken, newPassword, confirmPassword, trạng thái luồng hai bước); happy path và error path có thông báo lỗi cụ thể, dễ đối chiếu khi thực thi.
+- **Đầu ra AI chưa chính xác/sai sót**:
+  1. **OTP length mismatch:** SRS yêu cầu OTP 6 chữ số, mã nguồn sinh 4 chữ số (`Math.floor(1000 + Math.random() * 9000)` -- `server.js` dòng 72); nhãn UI cũng ghi "Mã OTP (4 số)".
+  2. **Missing confirm password field:** UI thực tế (`ForgotPassword.jsx`) không có trường xác nhận mật khẩu mới so với SRS; FR03-DT-03 vẫn yêu cầu dữ liệu `confirmPassword` nên phải điều chỉnh khi thực thi.
+  3. **Missing step indicator:** thiếu hiển thị "Bước 1 / 2" trên giao diện; ngoài ra bước 1 không có nút "Quay lại đăng nhập" như SRS (bước 2 có nút "← Quay lại" nhưng chỉ quay về bước 1).
+  4. **Strict whitespace regex:** regex kiểm tra mật khẩu trong code bắt buộc khoảng trắng (`(?=.*\s)`) và chỉ cho phép `[A-Za-z\d\s]` (từ chối ký tự đặc biệt), khác SRS (yêu cầu ký tự đặc biệt hoặc khoảng trắng). Hệ quả: các giá trị mật khẩu "hợp lệ" theo SRS dùng trong test case (`Abc12345!`, `Abc1234!`) đều chứa `!` và không có khoảng trắng nên dự kiến bị từ chối khi thực thi.
+  5. **Khai báo bao phủ vượt thực tế (phát hiện thêm khi rà soát):** coverage report của AI khai báo đã phủ các lớp (email sai định dạng, OTP rỗng, mật khẩu rỗng, thiếu độ phức tạp) mà test case không có tương ứng -- 4 lớp này đã được người kiểm thử bổ sung dữ liệu và thực thi (khớp dự đoán), nhưng sai sót khai báo của AI vẫn được ghi nhận nguyên trạng.
+- **Kết luận sau thực thi:** 4/4 sai lệch SRS ↔ mã nguồn nêu ở đầu báo cáo đều được xác nhận bằng thực thi (OTP 4 chữ số -- quan sát trực tiếp; thiếu trường xác nhận mật khẩu -- kiểm đếm trường bước 2; thiếu chỉ báo bước -- không tìm thấy text "Bước" ở cả 2 bước; regex mật khẩu -- BUG-FR03-02). Kết quả thực thi không có điểm nào trái với dự đoán từ rà soát mã nguồn.
 
 ---
 
@@ -585,7 +442,7 @@ biên\] khi chạy\]
 
 ---
 
-### 2.2.6. Kết quả thực thi và bằng chứng
+### 2.2.6. Kết quả thực thi
 
 - Tổng test case Domain Testing: \[ \]
 - Tổng test case BVA: \[ \]
@@ -734,7 +591,7 @@ biên\] khi chạy\]
 
 ---
 
-### 2.3.6. Kết quả thực thi và bằng chứng
+### 2.3.6. Kết quả thực thi
 
 - Tổng test case Domain Testing: \[ \]
 - Tổng test case BVA: \[ \]
@@ -901,7 +758,7 @@ kho hoặc khi chạy\]
 
 ---
 
-### 2.4.6. Kết quả thực thi và bằng chứng
+### 2.4.6. Kết quả thực thi
 
 - Tổng test case Domain Testing: \[ \]
 - Tổng test case BVA: \[ \]
@@ -952,76 +809,9 @@ Domain Testing và BVA; nêu feature có độ bao phủ thấp và lý do.\]
 
 ---
 
-# 3. Báo cáo lỗi (Bug Report)
+# 3. AI Gap Analysis and Evaluation
 
-## 3.1. Quy trình phát hiện và xác nhận lỗi
-
-1.  Ghi nhận sai lệch giữa kết quả mong đợi và kết quả thực tế.
-2.  Tái hiện lỗi với cùng dữ liệu và tiền điều kiện.
-3.  Kiểm tra lỗi có thể do dữ liệu, cấu hình hoặc môi trường hay không.
-4.  Thu thập bước tái hiện, ảnh chụp màn hình, log và thông tin môi
-    trường.
-5.  Tạo GitHub Issue với tiêu đề rõ ràng, mức độ nghiêm trọng và liên
-    kết test case.
-6.  Cập nhật trạng thái lỗi và bảng tổng hợp sau khi có kết quả xác
-    minh.
-
-## 3.2. Danh sách lỗi tổng hợp
-
----
-
-Bug ID Feature Tiêu đề Severity Priority Trạng thái Test GitHub
-ngắn Case Issue
-liên  
- quan
-
----
-
-BUG-001 \[FR-xx\] \[Tiêu \[Critical/High/Medium/Low\] \[P1/P2/P3/P4\] \[Open/...\] \[TC \[URL\]
-đề\] ID\]
-
-\[Thêm  
- dòng khi  
- có lỗi  
- thực tế\]
-
----
-
-> Nếu không phát hiện lỗi, ghi rõ số test case đã thực thi và phạm vi
-> kiểm thử; không tạo bug giả để lấp bảng.
-
-## 3.3. Chi tiết từng lỗi
-
-### BUG-\[ID\]: \[Tiêu đề ngắn, mô tả đúng hiện tượng\]
-
-- **Feature:** \[FR-03/FR-09/FR-14/FR-07\]
-- **Test Case ID:** \[ID\]
-- **Severity:** \[Mức độ ảnh hưởng\]
-- **Priority:** \[Mức ưu tiên xử lý\]
-- **Môi trường:** \[Thiết bị, trình duyệt, phiên bản\]
-- **Tiền điều kiện:** \[Điều kiện trước khi tái hiện\]
-- **Dữ liệu kiểm thử:** \[Dữ liệu\]
-- **Các bước tái hiện:**
-  1.  \[Bước 1\]
-  2.  \[Bước 2\]
-  3.  \[Bước 3\]
-- **Kết quả mong đợi:** \[Hành vi đúng theo yêu cầu\]
-- **Kết quả thực tế:** \[Hành vi quan sát được\]
-- **Tần suất tái hiện:** \[Ví dụ: x/y lần đã thử\]
-- **Ảnh/log minh chứng:** \[Đường dẫn hoặc nhúng ảnh\]
-- **GitHub Issue:** \[URL\]
-- **Ghi chú/xác minh:** \[Thông tin bổ sung\]
-
-## 3.4. Tổng kết lỗi
-
-\[Tổng số lỗi xác nhận; phân loại theo feature, severity và trạng thái;
-lỗi đã sửa/chưa sửa nếu có.\]
-
----
-
-# 4. AI Gap Analysis and Evaluation
-
-## 4.1. Các test case hoặc lỗi AI bỏ sót
+## 3.1. Các test case hoặc lỗi AI bỏ sót
 
 ---
 
@@ -1037,7 +827,7 @@ thi\]
 
 ---
 
-## 4.2. Đầu ra AI chưa chính xác hoặc chưa đầy đủ
+## 3.2. Đầu ra AI chưa chính xác hoặc chưa đầy đủ
 
 ---
 
@@ -1054,7 +844,7 @@ chép dài\] nguồn/kết
 
 ---
 
-## 4.3. Phân tích nguyên nhân
+## 3.3. Phân tích nguyên nhân
 
 Phân tích từng khoảng trống theo các khía cạnh phù hợp:
 
@@ -1072,7 +862,7 @@ Phân tích từng khoảng trống theo các khía cạnh phù hợp:
 \[Viết phân tích dựa trên các gap thực tế đã ghi ở mục 4.1 và 4.2; không
 dùng nhận định chung thay cho bằng chứng.\]
 
-## 4.4. So sánh trước và sau khi rà soát
+## 3.4. So sánh trước và sau khi rà soát
 
 ---
 
@@ -1098,280 +888,10 @@ nhận
 
 ---
 
-## 4.5. Bài học rút ra
+## 3.5. Bài học rút ra
 
 \[Trình bày bài học cụ thể về cách đặt prompt theo từng bước kỹ thuật,
 kiểm chứng giới hạn từ nguồn có căn cứ, rà soát đầu ra AI và giữ trách
 nhiệm cuối cùng của người kiểm thử.\]
 
 ---
-
-# 5. Agent Skills và tự động hóa
-
-## 5.1. Mục tiêu
-
-\[Mô tả mục tiêu tạo Skill để hỗ trợ quy trình Domain Testing/BVA có cấu
-trúc và có thể tái sử dụng. Nếu không xây dựng Skill, nêu trung thực
-phạm vi đã làm và không khai báo tính năng chưa có.\]
-
-## 5.2. Thiết kế Skill cho Domain Testing
-
-- **Tên Skill:** \[Tên\]
-- **Mục đích:** \[Mục đích\]
-- **Đầu vào:** \[Yêu cầu, feature, biến, quy tắc nghiệp vụ, thông tin
-  SUT\]
-- **Các bước xử lý:** \[Phân tích yêu cầu → liệt kê biến → phân lớp
-  miền → đề xuất test case → kiểm tra tính đầy đủ\]
-- **Đầu ra:** \[Bảng miền, lớp tương đương, test case và giả định cần
-  xác minh\]
-- **Quy tắc an toàn/chất lượng:** \[Không tự tạo quy tắc nghiệp vụ;
-  đánh dấu thông tin chưa xác minh\]
-- **Tệp Skill:** \[Đường dẫn hoặc tên tệp\]
-
-## 5.3. Thiết kế Skill cho BVA
-
-- **Tên Skill:** \[Tên\]
-- **Mục đích:** \[Mục đích\]
-- **Đầu vào:** \[Biến, giới hạn, kiểu dữ liệu và căn cứ\]
-- **Các bước xử lý:** \[Xác định biên → tạo giá trị sát biên → xác
-  định kết quả mong đợi → rà soát\]
-- **Đầu ra:** \[Bảng biên và test case BVA\]
-- **Quy tắc chất lượng:** \[Không tự đoán min/max; ghi nguồn và các
-  biên chưa xác minh\]
-- **Tệp Skill:** \[Đường dẫn hoặc tên tệp\]
-
-## 5.4. Cách sử dụng và đầu vào/đầu ra
-
-1.  \[Cách cài đặt/kích hoạt Skill.\]
-2.  \[Thông tin người dùng phải cung cấp.\]
-3.  \[Cách Skill xử lý.\]
-4.  \[Cách đọc kết quả.\]
-5.  \[Các bước người dùng phải rà soát trước khi thực thi.\]
-
-**Ví dụ đầu vào:** \[Prompt/dữ liệu đã loại bỏ thông tin nhạy cảm.\]
-
-**Ví dụ đầu ra:** \[Trích đoạn kết quả thực tế, kèm đường dẫn tệp nếu
-có.\]
-
-## 5.5. Minh họa chạy Skill trên feature
-
-- **Feature demo:** \[Chọn một feature\]
-- **Mục tiêu demo:** \[Domain Testing/BVA hoặc cả hai\]
-- **Các bước end-to-end:** \[Đầu vào → chạy Skill → rà soát → sửa →
-  tạo test case → thực thi\]
-- **Kết quả:** \[Kết quả thực tế\]
-- **Bằng chứng:** \[Ảnh/log/video\]
-
-## 5.6. Đánh giá hiệu quả và giới hạn
-
-Tiêu chí Quan sát/kết quả Bằng chứng
-
----
-
-Tính đầy đủ của test case \[Điền\] \[Link\]
-Tính đúng đắn của miền/biên \[Điền\] \[Link\]
-Khả năng tái sử dụng \[Điền\] \[Link\]
-Thời gian/độ thuận tiện \[Điền nếu có đo lường\] \[Link\]
-Lỗi hoặc giới hạn còn lại \[Điền\] \[Link\]
-Vai trò rà soát của con người \[Điền\] \[Link\]
-
-## 5.7. Video demo và liên kết
-
-- **Video 1 -- Domain Testing:** \[YouTube URL\]
-- **Video 2 -- BVA:** \[YouTube URL\]
-- **Video end-to-end trên feature:** \[YouTube URL\]
-- **Repository/tệp Skill:** \[URL\]
-- **Ghi chú:** \[Nội dung video, feature và phạm vi được trình diễn\]
-
----
-
-# 6. Test Summary Report
-
-## 6.1. Tóm tắt phạm vi
-
-- SUT: EShop.
-- Số feature được lựa chọn: 4.
-- Feature: FR-03, FR-09, FR-14 và FR-07 (phạm vi mobile cần xác nhận
-  theo yêu cầu Pool D).
-- Kỹ thuật: Domain Testing và Boundary Value Analysis.
-- Khoảng thời gian kiểm thử: \[Ngày bắt đầu -- ngày kết thúc\].
-- Môi trường: \[Tóm tắt\].
-
-## 6.2. Thống kê test case
-
-Chỉ số FR-03 FR-09 FR-14 FR-07 Mobile Tổng
-
----
-
-Test case thiết kế -- Domain Testing \[ \] \[ \] \[ \] \[ \] \[ \]
-Test case thiết kế -- BVA \[ \] \[ \] \[ \] \[ \] \[ \]
-Tổng test case thiết kế \[ \] \[ \] \[ \] \[ \] \[ \]
-Đã thực thi \[ \] \[ \] \[ \] \[ \] \[ \]
-Pass \[ \] \[ \] \[ \] \[ \] \[ \]
-Fail \[ \] \[ \] \[ \] \[ \] \[ \]
-Blocked \[ \] \[ \] \[ \] \[ \] \[ \]
-Not Executed \[ \] \[ \] \[ \] \[ \] \[ \]
-
-> Kiểm tra tính nhất quán số liệu: `Đã thực thi = Pass + Fail` nếu chỉ
-> dùng hai trạng thái này cho các test case đã chạy; nếu có Blocked, hãy
-> thống nhất rõ cách tính và tránh cộng trùng. Tổng các trạng thái phải
-> khớp với tổng số test case thiết kế.
-
-## 6.3. Thống kê lỗi
-
-Chỉ số Số lượng
-
----
-
-Tổng lỗi đã ghi nhận \[ \]
-Lỗi đã xác nhận \[ \]
-Critical \[ \]
-High \[ \]
-Medium \[ \]
-Low \[ \]
-Open \[ \]
-Fixed/Closed \[ \]
-
-## 6.4. Đánh giá mức độ hoàn thành
-
-- **Mức độ bao phủ Domain Testing:** \[Tóm tắt.\]
-- **Mức độ bao phủ BVA:** \[Tóm tắt.\]
-- **Tỷ lệ thực thi:** \[Cách tính và kết quả.\]
-- **Kết quả quan trọng:** \[Nêu các kết quả đã có bằng chứng.\]
-- **Yêu cầu chưa kiểm thử:** \[Liệt kê và lý do.\]
-
-## 6.5. Hạn chế và rủi ro còn lại
-
-\[Ví dụ về giới hạn môi trường, dữ liệu thử, không thể kiểm tra
-email/token thật, thiếu quy tắc biên chính thức hoặc hạn chế thiết bị.
-Chỉ nêu những điều thực sự xảy ra.\]
-
-## 6.6. Kết luận và đề xuất
-
-\[Tổng kết việc áp dụng hai kỹ thuật, mức độ đạt mục tiêu, lỗi quan
-trọng, đóng góp của AI/Agent Skills và đề xuất kiểm thử tiếp theo.\]
-
----
-
-# Tài liệu tham khảo
-
-> Ghi thông tin xuất bản và ngày truy cập theo tài liệu thực tế đã đọc.
-> Không đưa tài liệu vào danh mục nếu chưa sử dụng.
-
-1.  ISTQB. _Foundation Level Syllabus_ (ấn bản mới nhất phù hợp).
-2.  Hardman, P. (2025). _A Post-AI Learning Taxonomy_.
-3.  Fuster Rabella (2025). _OECD Education Working Paper No. 338_.
-4.  Anthropic (2025). _Building Reliable AI Test Agents_.
-5.  DeepEval documentation: \[URL và ngày truy cập\].
-6.  Promptfoo documentation: \[URL và ngày truy cập\].
-7.  EShop SUT repository: https://github.com/ttbhanh/eshop-sut (ngày
-    truy cập: \[ngày\]).
-8.  Các tài liệu/nguồn khác đã sử dụng: \[Bổ sung\].
-
----
-
-# Phụ lục
-
-## A. AI Audit Report
-
-**Phụ lục này phải được hoàn thiện và nộp thành tài liệu Markdown + PDF
-riêng theo yêu cầu bài tập.**
-
-Ghi lại toàn bộ tương tác AI có liên quan đến bài tập. Mỗi lần tương tác
-cần có:
-
-Trường Nội dung
-
----
-
-Interaction ID \[AI-001\]
-Công cụ/mô hình AI \[Tên công cụ và model nếu biết\]
-Ngày giờ \[Ngày giờ thực tế\]
-Feature/kỹ thuật \[FR-xx; Domain Testing/BVA/Gap Analysis/Skill...\]
-Prompt đầy đủ \[Dán prompt đã dùng\]
-Đầu ra AI \[Dán đầu ra hoặc tham chiếu tệp; lưu đủ theo yêu cầu\]
-Rà soát của người thực hiện \[Điểm đúng/sai/thiếu và cách xử lý\]
-Đầu ra sau chỉnh sửa \[Liên kết/tệp kết quả đã được kiểm chứng\]
-
-Lặp lại bảng/nhật ký cho tất cả tương tác. Nếu không sử dụng AI cho một
-phần nào đó, khai báo rõ theo đúng thực tế.
-
-## B. AI Critique
-
-**Phụ lục này phải được hoàn thiện và nộp thành tài liệu Markdown + PDF
-riêng. Độ dài bắt buộc: 200--300 từ.**
-
-Viết bài phê bình dựa trên trải nghiệm thực tế, trả lời:
-
-1.  AI đã đưa ra nội dung sai, thiên lệch hoặc chưa đầy đủ ở đâu?
-2.  Vì sao AI không phát hiện được vấn đề đó?
-3.  Bạn đã dùng bằng chứng nào để xác minh hoặc bác bỏ đầu ra AI?
-4.  Bạn rút ra nguyên tắc gì khi cộng tác với AI trong kiểm thử phần
-    mềm?
-
-**Bản nháp cần hoàn thiện:** \[Viết 200--300 từ dựa trên các trường hợp
-thực tế trong Chương 4; không dùng đoạn văn chung chung hoặc khẳng định
-chưa có bằng chứng.\]
-
-## C. Git Commit Log
-
-Lưu log ở tệp văn bản riêng, ví dụ `git-commit-log.txt`.
-
-Ngày giờ Feature Bước kiểm thử Commit hash Nội dung commit
-
----
-
-\[Ngày giờ\] \[FR-xx\] \[Phân tích yêu cầu\] \[Hash\] \[Thông điệp\]
-\[Ngày giờ\] \[FR-xx\] \[Domain Testing\] \[Hash\] \[Thông điệp\]
-\[Ngày giờ\] \[FR-xx\] \[BVA\] \[Hash\] \[Thông điệp\]
-\[Ngày giờ\] \[FR-xx\] \[Thực thi/báo cáo\] \[Hash\] \[Thông điệp\]
-
-## D. Bộ test case đầy đủ
-
-\[Đặt các bảng test case chi tiết hoặc liên kết tới tệp
-CSV/XLSX/Markdown chứa toàn bộ test case.\]
-
-## E. Ảnh và bằng chứng kiểm thử
-
-- \[Tên ảnh/video/log\]
-- \[Test Case ID liên quan\]
-- \[Feature\]
-- \[Mô tả bằng chứng\]
-- \[Đường dẫn\]
-
-Mỗi GitHub Issue báo lỗi cần có ảnh minh chứng đính kèm theo yêu cầu bài
-tập.
-
-## F. Agent Skills và hướng dẫn sử dụng
-
-- Tệp Skill Domain Testing: \[Đường dẫn\]
-- Tệp Skill BVA: \[Đường dẫn\]
-- Hướng dẫn cài đặt/sử dụng: \[Đường dẫn\]
-- Ví dụ đầu vào/đầu ra: \[Đường dẫn\]
-- Video demo end-to-end: \[URL\]
-
----
-
-# Checklist trước khi nộp
-
-- [ ] Báo cáo chính đã có cả Domain Testing và BVA cho đủ bốn feature.
-- [ ] Mỗi feature có phân tích từng bước, miền/lớp giá trị, biên và
-      test case.
-- [ ] Test case có kết quả mong đợi, kết quả thực tế, trạng thái và
-      bằng chứng.
-- [ ] Mọi lỗi được ghi trong báo cáo Markdown và GitHub Issues; issue
-      có ảnh minh chứng.
-- [ ] AI Gap Analysis phản ánh các thiếu sót/sai sót thực tế của AI và
-      lý do.
-- [ ] AI Audit Report đầy đủ prompt, đầu ra, công cụ và ngày giờ; có
-      bản Markdown + PDF riêng.
-- [ ] AI Critique dài 200--300 từ; có bản Markdown + PDF riêng.
-- [ ] Agent Skills và video demo được đính kèm nếu đã xây dựng; đối
-      chiếu yêu cầu chấm điểm.
-- [ ] Git commit log dạng văn bản được đính kèm.
-- [ ] `README.md` có bảng tự đánh giá và Test Summary Report.
-- [ ] Các con số trong báo cáo, README và bảng tổng hợp nhất quán.
-- [ ] Xác nhận phạm vi Pool D/Mobile với giảng viên nếu cần.
-- [ ] Tạo ZIP theo mẫu:
-      `<StudentID>_HW02_AI_DomainTesting_<SelfAssessedGrade>.zip`.
-- [ ] Kiểm tra đầy đủ các tệp bắt buộc trước khi nộp Moodle.

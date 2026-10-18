@@ -50,30 +50,24 @@
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | FR14-DT-01 | Create -- dữ liệu hợp lệ (V1-N1) | Backend chạy, CSDL seed sạch (3 danh mục), có token admin | `POST /api/categories`, body `{"name": "Máy tính bảng"}`, header `Authorization: Bearer <admin_token>` | 1. Đăng nhập `admin@eshop.com` lấy JWT<br>2. Gửi POST với tên hợp lệ<br>3. Gọi GET /api/categories đối chiếu | HTTP 200, `{"message": "Category created", "id": <mới>}`; danh mục xuất hiện trong danh sách | HTTP 200, id=4; GET trả 4 danh mục gồm "Máy tính bảng" | **Pass** |
 | FR14-DT-02 | Read -- danh sách có dữ liệu (V5-L1) | Có ít nhất 1 danh mục trong CSDL | `GET /api/categories` (không cần token) | 1. Gọi GET /api/categories<br>2. Đối chiếu số lượng, id, tên với CSDL | HTTP 200, mảng JSON đầy đủ danh mục | HTTP 200, đúng 4 danh mục (3 seed + 1 vừa thêm), id và tên chính xác | **Pass** |
-| FR14-DT-03 | Create -- tên rỗng (V1-N2) | Có token admin | `POST /api/categories`, body `{"name": ""}` | 1. Gửi POST với tên là chuỗi rỗng | **Từ chối (HTTP 400)** -- FR-14: "không được để trống" | HTTP 200, `{"message": "Category created", "id": 5}` -- danh mục rỗng được lưu | **Fail → BUG-01** |
-| FR14-DT-04 | Create -- thiếu trường name (V1-N3) | Có token admin | `POST /api/categories`, body `{}` | 1. Gửi POST không có trường name | Từ chối (HTTP 400) | HTTP 200, id=6, bản ghi `name = NULL` được lưu | **Fail → BUG-01** |
-| FR14-DT-05 | Create -- tên chỉ toàn khoảng trắng (V1-N4) | Có token admin | `POST /api/categories`, body `{"name": "   "}` | 1. Gửi POST với 3 ký tự khoảng trắng | Từ chối (HTTP 400) -- thực chất là tên rỗng sau trim | HTTP 200, id=7, lưu nguyên chuỗi khoảng trắng | **Fail → BUG-02** |
+| FR14-DT-03 | Create -- tên rỗng (V1-N2) | Có token admin | `POST /api/categories`, body `{"name": ""}` | 1. Gửi POST với tên là chuỗi rỗng | **Từ chối (HTTP 400)** -- FR-14: "không được để trống" | HTTP 200, `{"message": "Category created", "id": 5}` -- danh mục rỗng được lưu | **Fail → BUG-FR14-01** |
+| FR14-DT-04 | Create -- thiếu trường name (V1-N3) | Có token admin | `POST /api/categories`, body `{}` | 1. Gửi POST không có trường name | Từ chối (HTTP 400) | HTTP 200, id=6, bản ghi `name = NULL` được lưu | **Fail → BUG-FR14-01** |
+| FR14-DT-05 | Create -- tên chỉ toàn khoảng trắng (V1-N4) | Có token admin | `POST /api/categories`, body `{"name": "   "}` | 1. Gửi POST với 3 ký tự khoảng trắng | Từ chối (HTTP 400) -- thực chất là tên rỗng sau trim | HTTP 200, id=7, lưu nguyên chuỗi khoảng trắng | **Fail → BUG-FR14-02** |
 | FR14-DT-06 | Create -- tên trùng lặp (V1-N8) | Danh mục "Điện thoại" (id=1) đã tồn tại | `POST /api/categories`, body `{"name": "Điện thoại"}` | 1. Tạo danh mục trùng tên có sẵn<br>2. Gọi GET đối chiếu | Ghi nhận hành vi -- SRS không quy định UNIQUE | HTTP 200, id=8; 2 bản ghi cùng tên "Điện thoại" tồn tại song song | **Pass (theo SRS)** -- ghi nhận rủi ro |
 | FR14-DT-07 | Create -- ký tự đặc biệt/emoji (V1-N6) | Có token admin | `POST /api/categories`, body `{"name": "Laptop-Gaming!@# 🎮"}` | 1. Tạo danh mục tên chứa ký tự đặc biệt + emoji<br>2. GET đối chiếu | Chấp nhận (SRS chỉ bắt buộc không rỗng, không cấm ký tự) | HTTP 200, id=9, lưu và hiển thị đúng | **Pass** |
-| FR14-DT-08 | Create -- sai kiểu dữ liệu (V1-N7) | Có token admin | `POST /api/categories`, body `{"name": 12345}` (number) | 1. Gửi POST với name là kiểu số | Từ chối (HTTP 400) -- name phải là chuỗi | HTTP 200, id=10; giá trị 12345 lưu thẳng cột TEXT, GET trả name dạng số | **Fail → BUG-03** |
+| FR14-DT-08 | Create -- sai kiểu dữ liệu (V1-N7) | Có token admin | `POST /api/categories`, body `{"name": 12345}` (number) | 1. Gửi POST với name là kiểu số | Từ chối (HTTP 400) -- name phải là chuỗi | HTTP 200, id=10; giá trị 12345 lưu thẳng cột TEXT, GET trả name dạng số | **Fail → BUG-FR14-03** |
 | FR14-DT-09 | Access Control -- POST không có token (V3-A3) | Không gửi header Authorization | `POST /api/categories`, body `{"name": "No Token Cat"}` | 1. Gửi POST không kèm token | HTTP 401 Unauthorized | HTTP 401, `{"error": "Unauthorized"}` | **Pass** |
 | FR14-DT-10 | Access Control -- token sai định dạng (V3-A4) | Token rác `abc.def.ghi` | `POST /api/categories`, token không verify được | 1. Gửi POST với token sai | HTTP 401/403 | HTTP 403, `{"error": "Forbidden"}` | **Pass** |
-| FR14-DT-11 | Access Control -- token user thường, POST (V3-A2) | Đăng nhập `test@eshop.com` (role=user) lấy token | `POST /api/categories`, body `{"name": "User Token Cat"}`, token user | 1. Đăng nhập tài khoản user thường<br>2. Gửi POST tạo danh mục bằng token user | **HTTP 403** -- FR-12: POST /api/categories yêu cầu `role='admin'` trong Token (SEC-03) | HTTP 200, `{"message": "Category created", "id": 11}` -- **user thường tạo danh mục thành công** | **Fail → BUG-04 (Critical)** |
+| FR14-DT-11 | Access Control -- token user thường, POST (V3-A2) | Đăng nhập `test@eshop.com` (role=user) lấy token | `POST /api/categories`, body `{"name": "User Token Cat"}`, token user | 1. Đăng nhập tài khoản user thường<br>2. Gửi POST tạo danh mục bằng token user | **HTTP 403** -- FR-12: POST /api/categories yêu cầu `role='admin'` trong Token (SEC-03) | HTTP 200, `{"message": "Category created", "id": 11}` -- **user thường tạo danh mục thành công** | **Fail → BUG-FR14-04 (Critical)** |
 | FR14-DT-12 | Access Control -- DELETE không có token (V3-A3) | Danh mục id=4 đang tồn tại | `DELETE /api/categories/4`, không token | 1. Gửi DELETE không kèm token | HTTP 401 Unauthorized; danh mục còn nguyên | HTTP 401; id=4 không bị xóa | **Pass** |
-| FR14-DT-13 | Access Control -- DELETE bằng token user (V3-A2) | Danh mục id=4 tồn tại; token user thường | `DELETE /api/categories/4`, token user | 1. Gửi DELETE danh mục bằng token user thường | HTTP 403 (FR-12 yêu cầu role admin) | HTTP 200, `{"message": "Category deleted"}` -- **danh mục bị user thường xóa thành công** | **Fail → BUG-04 (Critical)** |
-| FR14-DT-14 | Delete -- id không tồn tại (V2-I2) | Có token admin; id 9999 không có trong CSDL | `DELETE /api/categories/9999`, token admin | 1. Xóa danh mục id không tồn tại | HTTP 404 Not Found, thông báo phù hợp | HTTP 200, `{"message": "Category deleted"}` -- báo xóa thành công dù không xóa được gì | **Fail → BUG-06** |
-| FR14-DT-15 | Delete -- danh mục có sản phẩm tham chiếu (V4-S2) | Danh mục id=1 "Điện thoại" có 2 sản phẩm (iPhone 15 Pro Max, Samsung Galaxy S24 Ultra) trỏ tới `category_id = 1` | `DELETE /api/categories/1`, token admin | 1. GET /api/products đếm sản phẩm có category_id=1 (→ 2)<br>2. DELETE danh mục id=1<br>3. GET /api/products kiểm tra lại | Chặn xóa hoặc xử lý tham chiếu -- không để sản phẩm trỏ tới danh mục đã xóa | HTTP 200 xóa thành công; **2 sản phẩm vẫn giữ category_id=1** (dangling reference) | **Fail → BUG-05** |
+| FR14-DT-13 | Access Control -- DELETE bằng token user (V3-A2) | Danh mục id=4 tồn tại; token user thường | `DELETE /api/categories/4`, token user | 1. Gửi DELETE danh mục bằng token user thường | HTTP 403 (FR-12 yêu cầu role admin) | HTTP 200, `{"message": "Category deleted"}` -- **danh mục bị user thường xóa thành công** | **Fail → BUG-FR14-04 (Critical)** |
+| FR14-DT-14 | Delete -- id không tồn tại (V2-I2) | Có token admin; id 9999 không có trong CSDL | `DELETE /api/categories/9999`, token admin | 1. Xóa danh mục id không tồn tại | HTTP 404 Not Found, thông báo phù hợp | HTTP 200, `{"message": "Category deleted"}` -- báo xóa thành công dù không xóa được gì | **Fail → BUG-FR14-06** |
+| FR14-DT-15 | Delete -- danh mục có sản phẩm tham chiếu (V4-S2) | Danh mục id=1 "Điện thoại" có 2 sản phẩm (iPhone 15 Pro Max, Samsung Galaxy S24 Ultra) trỏ tới `category_id = 1` | `DELETE /api/categories/1`, token admin | 1. GET /api/products đếm sản phẩm có category_id=1 (→ 2)<br>2. DELETE danh mục id=1<br>3. GET /api/products kiểm tra lại | Chặn xóa hoặc xử lý tham chiếu -- không để sản phẩm trỏ tới danh mục đã xóa | HTTP 200 xóa thành công; **2 sản phẩm vẫn giữ category_id=1** (dangling reference) | **Fail → BUG-FR14-05** |
 | FR14-DT-16 | Update -- admin (ngoài phạm vi SRS, tham chiếu) | Có token admin; SRS FR-14 không yêu cầu Update, API PUT tồn tại ở backend, UI không có | `PUT /api/categories/2`, body `{"name": "Laptop & Notebook"}` | 1. Gửi PUT đổi tên danh mục id=2<br>2. Khôi phục tên "Laptop" sau test | HTTP 200, chỉ danh mục id=2 thay đổi (tham chiếu -- không kết luận theo SRS) | HTTP 200, `{"message": "Category updated"}`; đúng id=2, đã khôi phục | **Pass (tham chiếu)** |
-| FR14-DT-17 | Update -- token user (ngoài phạm vi SRS, tham chiếu) | Token user thường | `PUT /api/categories/2`, body `{"name": "Hacked"}` | 1. Gửi PUT bằng token user thường<br>2. Khôi phục tên sau test | HTTP 403 (FR-12: PUT /api/categories yêu cầu role admin) | HTTP 200, `{"message": "Category updated"}` -- **user thường sửa được tên danh mục**; đã khôi phục | **Fail → BUG-04 (Critical, áp dụng cả PUT)** |
+| FR14-DT-17 | Update -- token user (ngoài phạm vi SRS, tham chiếu) | Token user thường | `PUT /api/categories/2`, body `{"name": "Hacked"}` | 1. Gửi PUT bằng token user thường<br>2. Khôi phục tên sau test | HTTP 403 (FR-12: PUT /api/categories yêu cầu role admin) | HTTP 200, `{"message": "Category updated"}` -- **user thường sửa được tên danh mục**; đã khôi phục | **Fail → BUG-FR14-04 (Critical, áp dụng cả PUT)** |
 | FR14-DT-18 | Read -- danh sách rỗng (V5-L2) | CSDL seed sạch 3 danh mục (re-start backend để re-seed) | Xóa lần lượt id 1, 2, 3 bằng admin → `GET /api/categories` | 1. Xóa cả 3 danh mục seed<br>2. Gọi GET /api/categories | HTTP 200, mảng rỗng `[]`; UI hiển thị empty state (FR-24) | HTTP 200, `[]` -- API trả mảng rỗng đúng. **Lưu ý UI:** bảng hiển thị trống, không có empty-state thân thiện (icon + message) -- cần đối chiếu bằng mắt trên trình duyệt | **Pass (mức API)** |
 
-Ghi chú:
-
-1.  Thực thi trực tiếp qua API (fetch/cURL) trên backend chạy local, CSDL được re-seed trước mỗi lượt lớn để loại bỏ ảnh hưởng dữ liệu rác. Kết quả từng test được ghi lại đầy đủ trong `category-management-feature/domain-testing/test-cases.md`.
-2.  FR14-DT-16/17 thuộc API `PUT` -- SRS FR-14 không yêu cầu thao tác Update nên hai test này được giữ ở dạng "tham chiếu" để làm bằng chứng pattern thiếu kiểm tra role áp dụng cho cả PUT; không tính vào số liệu Pass/Fail của FR-14 theo SRS khi cần tách bạch (xem thống kê ở 2.3.6 và phần số liệu cuối).
-3.  Rà soát UI (`frontend-admin/src/App.jsx`): ô nhập tên không có thuộc tính `required`, nhãn không có dấu `*` (FR-22); nút "Xóa" không có dialog xác nhận (SRS chỉ bắt buộc dialog với xóa khỏi giỏ hàng -- FR-07/FR-24 -- nên ghi nhận là đề xuất UX, không phải bug).
-
-**Đánh giá Domain Testing:** 18 test case phủ đủ 22 lớp tương đương đã xác định trên 5 biến (name: 8 lớp; id: 4 lớp; token: 4 lớp; trạng thái tham chiếu sản phẩm: 2 lớp; trạng thái danh sách: 2 lớp). Kết quả: 9 Pass, 9 Fail (trong đó DT-16 Pass tham chiếu ngoài SRS). Tất cả Fail đều là vi phạm thật của SUT so với SRS, tập trung ở 2 nhóm: (1) không validate `name` (rỗng/khoảng trắng/kiểu dữ liệu) vi phạm FR-14; (2) không kiểm tra role admin trên POST/PUT/DELETE vi phạm FR-12/SEC-03 -- nghiêm trọng nhất. Chi tiết bao phủ từng lớp: `category-management-feature/domain-testing/coverage-report.md`.
+**Đánh giá Domain Testing:** 18 test case phủ đủ 22 lớp tương đương đã xác định trên 5 biến (name: 8 lớp; id: 4 lớp; token: 4 lớp; trạng thái tham chiếu sản phẩm: 2 lớp; trạng thái danh sách: 2 lớp). Kết quả: 9 Pass, 9 Fail (trong đó DT-16 Pass tham chiếu ngoài SRS). Tất cả Fail đều là vi phạm thật của SUT so với SRS, tập trung ở 2 nhóm: (1) không validate `name` (rỗng/khoảng trắng/kiểu dữ liệu) vi phạm FR-14; (2) không kiểm tra role admin trên POST/PUT/DELETE vi phạm FR-12/SEC-03 -- nghiêm trọng nhất. Chi tiết bao phủ từng lớp:.
 
 ### 2.3.4. BVA -- phân tích biên
 
@@ -91,20 +85,14 @@ Ghi chú:
 
 | Test Case ID | Biến/biên kiểm thử | Giá trị | Tiền điều kiện | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Trạng thái |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| FR14-BVA-01 | Độ dài tên -- Min−1 | `name = ""` (0 ký tự) | Có token admin | 1. Gửi `POST /api/categories` với tên rỗng | HTTP 400 -- từ chối (FR-14: không được để trống) | HTTP 200, `{"message": "Category created", "id": 12}` | **Fail → BUG-01** |
+| FR14-BVA-01 | Độ dài tên -- Min−1 | `name = ""` (0 ký tự) | Có token admin | 1. Gửi `POST /api/categories` với tên rỗng | HTTP 400 -- từ chối (FR-14: không được để trống) | HTTP 200, `{"message": "Category created", "id": 12}` | **Fail → BUG-FR14-01** |
 | FR14-BVA-02 | Độ dài tên -- Min | `name = "X"` (1 ký tự) | Có token admin | 1. Gửi `POST /api/categories` với tên 1 ký tự | HTTP 200 -- chấp nhận (tên ngắn nhất hợp lệ) | HTTP 200, id=13 | **Pass** |
 | FR14-BVA-03 | Độ dài tên -- Min+1 | `name = "XY"` (2 ký tự) | Có token admin | 1. Gửi `POST /api/categories` với tên 2 ký tự | HTTP 200 -- chấp nhận | HTTP 200, id=14 | **Pass** |
-| FR14-BVA-04 | Miền id DELETE -- dưới biên dưới | `id = 0` | Có token admin | 1. Gửi `DELETE /api/categories/0` | HTTP 404 Not Found | HTTP 200, `{"message": "Category deleted"}` | **Fail → BUG-06** |
-| FR14-BVA-05 | Miền id DELETE -- dưới biên dưới (xa) | `id = −1` | Có token admin | 1. Gửi `DELETE /api/categories/-1` | HTTP 404 Not Found | HTTP 200, `{"message": "Category deleted"}` | **Fail → BUG-06** |
-| FR14-BVA-06 | Miền id DELETE -- trên biên trên | `id = 15` (max tồn tại = 14, nên 15 không tồn tại) | Có token admin; đã GET danh sách xác nhận max id hiện thời | 1. Gửi `DELETE /api/categories/15` | HTTP 404 Not Found | HTTP 200, `{"message": "Category deleted"}` | **Fail → BUG-06** |
+| FR14-BVA-04 | Miền id DELETE -- dưới biên dưới | `id = 0` | Có token admin | 1. Gửi `DELETE /api/categories/0` | HTTP 404 Not Found | HTTP 200, `{"message": "Category deleted"}` | **Fail → BUG-FR14-06** |
+| FR14-BVA-05 | Miền id DELETE -- dưới biên dưới (xa) | `id = −1` | Có token admin | 1. Gửi `DELETE /api/categories/-1` | HTTP 404 Not Found | HTTP 200, `{"message": "Category deleted"}` | **Fail → BUG-FR14-06** |
+| FR14-BVA-06 | Miền id DELETE -- trên biên trên | `id = 15` (max tồn tại = 14, nên 15 không tồn tại) | Có token admin; đã GET danh sách xác nhận max id hiện thời | 1. Gửi `DELETE /api/categories/15` | HTTP 404 Not Found | HTTP 200, `{"message": "Category deleted"}` | **Fail → BUG-FR14-06** |
 | FR14-BVA-07 | Miền id DELETE -- tại biên trên | `id = 14` (bản ghi cuối đang tồn tại) | Có token admin; danh mục id=14 (`"XY"`) tồn tại | 1. Gửi `DELETE /api/categories/14` | HTTP 200 -- xóa đúng bản ghi cuối | HTTP 200, `{"message": "Category deleted"}` -- xóa đúng bản ghi tồn tại | **Pass** |
 | FR14-BVA-08 | Độ dài tên -- biên trên (thăm dò) | `name = "Z" × 10.000` | Có token admin; SRS không định nghĩa max | 1. Gửi POST với tên 10.000 ký tự<br>2. Xóa bản ghi sau test | Chưa xác minh (SRS không quy định) -- ghi nhận hành vi | HTTP 200, chấp nhận tên 10.000 ký tự (SQLite TEXT không giới hạn; UI không có `maxlength`) | **Informational** |
-
-Ghi chú:
-
-1.  Biên trên của miền id là giá trị động (id bản ghi cuối cùng thay đổi theo dữ liệu): tại thời điểm thực thi BVA, sau các test Domain Testing, danh mục có id lớn nhất là 14 nên chọn id=15 cho "trên biên" và id=14 cho "tại biên".
-2.  FR14-BVA-08 là test thăm dò (probe) cho biên mà SRS chưa định nghĩa -- không tính vào số liệu Pass/Fail; kết quả dùng làm căn cứ đề xuất bổ sung quy tắc max length vào SRS.
-3.  Chi tiết giá trị 3 điểm: `category-management-feature/bva/bva-values.md`.
 
 ### 2.3.6. Kết quả thực thi
 
@@ -113,13 +101,13 @@ Ghi chú:
 - Pass: **12** | Fail: **13** | Blocked: 0 | Not Executed: 0
   - Domain Testing: 9 Pass / 9 Fail (DT-16 Pass ở dạng tham chiếu)
   - BVA: 3 Pass / 4 Fail
-- Bug liên quan: **6 nhóm lỗi xác nhận thực thi** (BUG-01 → BUG-06, chi tiết 2.3.7 và `category-management-feature/ai-mistake.md`):
-  - BUG-01 (Critical): chấp nhận tên rỗng `""` và thiếu trường `name` (NULL) -- DT-03, DT-04, BVA-01
-  - BUG-02: chấp nhận tên chỉ toàn khoảng trắng -- DT-05
-  - BUG-03: không kiểm tra kiểu dữ liệu (`name = 12345`) -- DT-08
-  - BUG-04 (Critical): POST/PUT/DELETE không kiểm tra `role='admin'` -- user thường thao tác được -- DT-11, DT-13, DT-17
-  - BUG-05: xóa danh mục đang được sản phẩm tham chiếu, để lại dangling reference -- DT-15
-  - BUG-06: DELETE id không tồn tại/ngoài miền trả 200 thay vì 404 -- DT-14, BVA-04/05/06
+- Bug liên quan: **6 nhóm lỗi xác nhận thực thi** (BUG-FR14-01 → BUG-FR14-06, chi tiết 2.3.7 và `category-management-feature/ai-mistake.md`):
+  - BUG-FR14-01 (Critical): chấp nhận tên rỗng `""` và thiếu trường `name` (NULL) -- DT-03, DT-04, BVA-01 -- GitHub Issue: [#10](https://github.com/kiterakun/HW02-Domain_Testing/issues/10)
+  - BUG-FR14-02: chấp nhận tên chỉ toàn khoảng trắng -- DT-05 -- GitHub Issue: [#11](https://github.com/kiterakun/HW02-Domain_Testing/issues/11)
+  - BUG-FR14-03: không kiểm tra kiểu dữ liệu (`name = 12345`) -- DT-08 -- GitHub Issue: [#12](https://github.com/kiterakun/HW02-Domain_Testing/issues/12)
+  - BUG-FR14-04 (Critical): POST/PUT/DELETE không kiểm tra `role='admin'` -- user thường thao tác được -- DT-11, DT-13, DT-17 -- GitHub Issue: [#13](https://github.com/kiterakun/HW02-Domain_Testing/issues/13)
+  - BUG-FR14-05: xóa danh mục đang được sản phẩm tham chiếu, để lại dangling reference -- DT-15 -- GitHub Issue: [#14](https://github.com/kiterakun/HW02-Domain_Testing/issues/14)
+  - BUG-FR14-06: DELETE id không tồn tại/ngoài miền trả 200 thay vì 404 -- DT-14, BVA-04/05/06 -- GitHub Issue: [#15](https://github.com/kiterakun/HW02-Domain_Testing/issues/15)
 - Nhận xét: Luồng Create/Read/Delete với dữ liệu hợp lệ và xác thực admin (hoặc thiếu/sai token ở mức 401/403) hoạt động đúng. Hai nhóm vi phạm trọng yếu: (1) **không validate `name`** -- mọi giá trị không rỗng-nghĩa-là-hợp lệ đều lọt vào CSDL; (2) **không kiểm tra role admin** -- middleware chỉ verify chữ ký JWT. Ngoài ra, handler DELETE không kiểm tra tồn tại của bản ghi và không quan tâm khóa ngoại với bảng `products`. Mọi thao tác test đã dọn dữ liệu và re-seed CSDL về 3 danh mục gốc sau mỗi đợt chạy.
 
 ### 2.3.7. Đánh giá feature
@@ -132,7 +120,6 @@ Ghi chú:
   2. **Giả định mã lỗi 401/403:** ban đầu mặc định token sai trả 401; thực tế `jwt.verify` trả 403 cho token sai định dạng, 401 cho token thiếu -- điều chỉnh kỳ vọng theo bằng chứng thực thi.
   3. **Nhầm lẫn phạm vi Update:** đề bài/báo cáo ghi "CRUD" nhưng SRS FR-14 chỉ yêu cầu Thêm/Xem/Xóa; AI ban đầu đặt test Update vào danh sách chính -- đã chuyển 2 test PUT (DT-16/17) thành "tham chiếu, ngoài phạm vi SRS" và tách bạch khi thống kê.
   4. **Biên id động:** phải tính max id bằng GET ngay trước khi chạy BVA (14 tại thời điểm chạy), không hard-code.
-- **Phần người kiểm thử đã bổ sung:** đối chiếu khai báo của AI với mã nguồn (`server.js` dòng 100--110, 243--278; `database.js` dòng 23--26; `App.jsx` dòng 142--160, 294--335) trước khi chấp nhận từng lớp miền; ghi rõ căn cứ dòng lệnh cho từng quy tắc; xác định 6 nhóm bug có bằng chứng thực thi; dọn dữ liệu và re-seed sau mỗi đợt chạy để bảo đảm tính lặp lại.
 
 ---
 
@@ -144,6 +131,6 @@ Khi cập nhật bảng 2.5 và bảng 6.2 của báo cáo, dùng các số sau 
 - Test case thiết kế -- BVA: **7** (+1 thăm dò BVA-08 không tính số liệu)
 - Tổng test case thiết kế: **25**
 - Đã thực thi: **25** | Pass: **12** | Fail: **13** | Blocked: **0** | Not Executed: **0**
-- Bug xác nhận: **6** (BUG-01 → BUG-06; trong đó 2 nhóm mức Critical: BUG-01, BUG-04)
+- Bug xác nhận: **6** (BUG-FR14-01 → BUG-FR14-06; trong đó 2 nhóm mức Critical: BUG-FR14-01, BUG-FR14-04)
 
 Ghi chú thống nhất số liệu: nếu muốn tách bạch 2 test PUT "tham chiếu ngoài SRS" khỏi phạm vi FR-14 theo SRS (Thêm/Xem/Xóa), dùng bộ số rút gọn: Domain Testing 16 (7 Pass / 9 Fail), BVA 7 (3 Pass / 4 Fail), tổng 23, đã thực thi 23, Pass 10, Fail 13 -- tuy nhiên toàn bộ file này thống nhất dùng bộ số 18+7=25 để nhất quán với test-cases.md.
